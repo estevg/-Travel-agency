@@ -6,7 +6,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 // Importar los routes
 const routes = require('./routes');
-
+// Importar dotenv
+require('dotenv').config();
 // Importar config
 const configs = require('./config');
 
@@ -15,8 +16,11 @@ const configs = require('./config');
 //     .then(() => console.log('DB Conectado'))
 //     .catch(error => console.log(error));
 
+
 // Configurar Express
 const app = express();
+app.set('host', process.env.HOST || '0.0.0.0');
+app.set('port', process.env.PORT || 4000);
 
 // Habilitar pug
 app.set('view engine', 'pug');
@@ -50,4 +54,4 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use('/', routes());
 
 
-app.listen(3000);
+app.listen(app.get('port'));
